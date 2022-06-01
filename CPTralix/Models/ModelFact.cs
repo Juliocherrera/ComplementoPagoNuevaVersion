@@ -154,5 +154,31 @@ namespace CPTralix.Models
             return dataTable3;
 
         }
+        public DataTable getDatosMaster(string identificador)
+        {
+            DataTable dataTable = new DataTable();
+            string cadena = @"Data source=172.24.16.113; Initial Catalog=DYNAMICS; User ID=sa; Password=tdr9312;Trusted_Connection=false;MultipleActiveResultSets=true";
+            using (SqlConnection connection = new SqlConnection(cadena))
+            {
+                using (SqlCommand selectCommand = new SqlCommand("select invoice as folio from [172.24.16.112].[TMWSuite].[dbo].VISTA_Fe_generadas where nmaster = @identificador", connection))
+                {
+                    selectCommand.CommandType = CommandType.Text;
+                    selectCommand.Parameters.AddWithValue("@identificador", (object)identificador);
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
+                        try
+                        {
+                            selectCommand.Connection.Open();
+                            sqlDataAdapter.Fill(dataTable);
+                        }
+                        catch (SqlException ex)
+                        {
+                            string message = ex.Message;
+                        }
+                    }
+                }
+            }
+            return dataTable;
+        }
     }
 }

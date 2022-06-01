@@ -27,6 +27,10 @@ namespace CPTralix.Controllers
         {
             return this.modelFact.getDatosCPAGDOCTRL(identificador, foliocpag);
         }
+        public DataTable getDatosMaster(string identificador)
+        {
+            return this.modelFact.getDatosMaster(identificador);
+        }
         // GET: FacCp
         public ActionResult Index()
         {
